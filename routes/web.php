@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,10 +13,28 @@
 |
 */
 
+
+
 Route::get('/', function () {
-    return view('welcome');
+
+    $user = Auth::user();
+
+    if($user->isAdmin()) {
+        return "User is administrator";
+    }
+    // return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+
+
+// Using our custom Role middleware from App\Http\Middleware\RoleMiddleware
+
+Route::get('/admin/user/roles',[ 'middleware' => ['role', 'auth', 'web'], function (){
+    
+    return "Middleware role";
+
+}]);
