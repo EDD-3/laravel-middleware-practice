@@ -21,8 +21,18 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        //Setting session globally
+        //session(['peter'=>'student']);
+        //Setting session locally
+        $request->session()->put(['edwin'=>'master instructor']);
+        
+        //Access session
+        return $request->session()->all();
+
+
+
+        // return view('home');
     }
 }
